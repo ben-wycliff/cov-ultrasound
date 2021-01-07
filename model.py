@@ -17,6 +17,9 @@ from keras.utils import to_categorical
 
 # Load data progressively
 datagen = ImageDataGenerator(
+    rescale=1.0/255.0,
+    featurewise_center=True,
+    featurewise_std_normalization=True,
     height_shift_range=0.1, 
     width_shift_range=0.1, 
     horizontal_flip=True, 
@@ -33,9 +36,9 @@ batchX, batchy = trainit.next()
 print(f"batch shape = {batchX.shape}, min = {batchX.min()}, max = {batchX.max()}")
 
 # inspecting image
-image = batchX[0].astype("uint8")
-print(image.shape)
-pyplot.imshow(image)
-pyplot.show()
+# image = batchX[0].astype("uint8")
+# print(image.shape)
+# pyplot.imshow(image)
+# pyplot.show()
 
 
