@@ -13,21 +13,24 @@ from keras.utils import plot_model
 from keras.preprocessing.image import ImageDataGenerator
 from PIL import Image
 from matplotlib import pyplot
+from keras.utils import to_categorical
 
 # Load data progressively
 datagen = ImageDataGenerator()
 
 # create train iteration
-trainit = datagen.flow_from_directory("data/train", class_mode="categorical")
+trainit = datagen.flow_from_directory("data/train", target_size=(224, 224), class_mode="categorical")
 # create test iteration
-testit = datagen.flow_from_directory("data/test", class_mode="categorical")
+testit = datagen.flow_from_directory("data/test", target_size=(224, 224), class_mode="categorical")
 
 #inspecting batch
 batchX, batchy = trainit.next()
 print(f"batch shape = {batchX.shape}, min = {batchX.min()}, max = {batchX.max()}")
 
+# inspecting image
 image = batchX[0].astype("uint8")
 print(image.shape)
 pyplot.imshow(image)
 pyplot.show()
+
 
