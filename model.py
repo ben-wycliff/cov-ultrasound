@@ -16,7 +16,12 @@ from matplotlib import pyplot
 from keras.utils import to_categorical
 
 # Load data progressively
-datagen = ImageDataGenerator()
+datagen = ImageDataGenerator(
+    height_shift_range=0.1, 
+    width_shift_range=0.1, 
+    horizontal_flip=True, 
+    vertical_flip=True, 
+    rotation_range=10)
 
 # create train iteration
 trainit = datagen.flow_from_directory("data/train", target_size=(224, 224), class_mode="categorical")
