@@ -41,4 +41,6 @@ print(f"batch shape = {batchX.shape}, min = {batchX.min()}, max = {batchX.max()}
 # pyplot.show()
 
 model = VGG16(include_top=False, input_shape=(224, 224, 3))
+for layer in model.layers:
+    layer.trainable = False
 
