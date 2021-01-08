@@ -13,8 +13,8 @@ from matplotlib import pyplot
 from keras.utils import to_categorical
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
-from keras.layers import Dense, Flatten
-# Load data progressively
+from keras.layers import Dense, Flatten, BatchNormalization, Dropout
+#======================== Load data progressively =============================
 datagen = ImageDataGenerator(
     rescale=1.0/255.0,
     samplewise_center=True,
@@ -40,13 +40,16 @@ print(f"batch shape = {batchX.shape}, min = {batchX.min()}, max = {batchX.max()}
 # pyplot.imshow(image)
 # pyplot.show()
 
+# ============================ Creating Model ===================================
 model = VGG16(include_top=False, input_shape=(224, 224, 3))
 for layer in model.layers:
     layer.trainable = False
     
 flat1 = Flatten()(model.layers[-1].output)
 class1 = Dense(64, activation="relu")(flat1)
-output = Dense(3, activation="softmax")(class1)
+dropout = Dropout(0.5)(class1)
+normalized = BatchNormalization()(dropout)
+output = Dense(3, activation="softmax")(normalized)
 
 model = Model(inputs=model.inputs, outputs=output)
 model.summary()
