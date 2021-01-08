@@ -46,3 +46,4 @@ for layer in model.layers:
     
 flat1 = Flatten()(model.layers[-1].output)
 class1 = Dense(64, activation="relu")(flat1)
+output = Dense(3, activation="softmax")(class1)
