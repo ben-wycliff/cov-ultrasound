@@ -50,6 +50,9 @@ class1 = Dense(64, activation="relu")(flat1)
 dropout = Dropout(0.5)(class1)
 normalized = BatchNormalization()(dropout)
 output = Dense(3, activation="softmax")(normalized)
-
 model = Model(inputs=model.inputs, outputs=output)
 model.summary()
+# compile model
+opt = SGD(lr=0.001, momentum=0.9)
+model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
+
