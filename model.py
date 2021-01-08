@@ -45,4 +45,4 @@ for layer in model.layers:
     layer.trainable = False
     
 flat1 = Flatten()(model.layers[-1].output)
-
+class1 = Dense(64, activation="relu")(flat1)
