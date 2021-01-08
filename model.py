@@ -41,18 +41,19 @@ print(f"batch shape = {batchX.shape}, min = {batchX.min()}, max = {batchX.max()}
 # pyplot.show()
 
 # ============================ Creating Model ===================================
-model = VGG16(include_top=False, input_shape=(224, 224, 3))
-for layer in model.layers:
-    layer.trainable = False
-    
-flat1 = Flatten()(model.layers[-1].output)
-class1 = Dense(64, activation="relu")(flat1)
-dropout = Dropout(0.5)(class1)
-normalized = BatchNormalization()(dropout)
-output = Dense(3, activation="softmax")(normalized)
-model = Model(inputs=model.inputs, outputs=output)
-model.summary()
-# compile model
-opt = SGD(lr=0.001, momentum=0.9)
-model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
-
+def define_model():
+    model = VGG16(include_top=False, input_shape=(224, 224, 3))
+    for layer in model.layers:
+        layer.trainable = False
+        
+    flat1 = Flatten()(model.layers[-1].output)
+    class1 = Dense(64, activation="relu")(flat1)
+    dropout = Dropout(0.5)(class1)
+    normalized = BatchNormalization()(dropout)
+    output = Dense(3, activation="softmax")(normalized)
+    model = Model(inputs=model.inputs, outputs=output)
+    model.summary()
+    # compile model
+    opt = SGD(lr=0.001, momentum=0.9)
+    model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
+    return model
